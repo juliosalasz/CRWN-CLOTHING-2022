@@ -27,10 +27,12 @@ const SignUp = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
     if (password !== confirmPassword) {
-      alert("Password does not march");
+      alert("Password does not match");
       return;
     }
+
     try {
       const { user } = await createAuthUserWithEmailAndPassword(
         email,
@@ -40,8 +42,15 @@ const SignUp = () => {
       await createUserDocumentFromAuth(user, { displayName });
       resetFormFields();
     } catch (error) {
-      if (error.code === "auth/email-already-in-use") {
-        alert("Cannot create user, email already in use");
+      switch (error.code) {
+        case "auth/email-already-in-use":
+          alert("Cannot create user, email already in use");
+          break;
+        case "auth/weak-password":
+          alert("Password should be at least 6 characters");
+          break;
+        default:
+          console.log(error);
       }
       console.error("User creation encountered an error", error);
     }
@@ -49,6 +58,7 @@ const SignUp = () => {
 
   const handleChange = (event) => {
     const { name, value } = event.target;
+
     setFormFields({ ...formFields, [name]: value });
   };
 
