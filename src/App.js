@@ -5,10 +5,7 @@ import { Routes, Route } from "react-router-dom";
 import Navigation from "./routes/navigation/Navigation";
 import HomePage from "./routes/homePage/HomePage";
 import SignInAndSignUpPage from "./routes/signInAndSignUpPage/signInAndSignUpPage";
-
-const Shop = () => {
-  return <h1> I am the Shop Page</h1>;
-};
+import Shop from "./routes/shop/Shop";
 
 function App() {
   return (
